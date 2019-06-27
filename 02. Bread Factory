@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Bread_Factory
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			List<string> eventList = Console.ReadLine().Split("|").ToList();
+
+			List<string> eventType = new List<string>();
+			List<int> ingrediant = new List<int>();
+
+			int energy = 100;
+			int coins = 100;
+
+			string[] split = new string[2];
+
+			for (int i = 0; i < eventList.Count; i++)
+			{
+				split = eventList[i].Split("-");
+
+				eventType.Add(split[0]);
+				ingrediant.Add(int.Parse(split[1]));
+			}
+
+			for (int i = 0; i < eventType.Count; i++)
+			{
+				if (eventType[i].Equals("rest"))
+				{
+					if (energy.Equals(100))
+					{
+						Console.WriteLine("You gained 0 energy.");
+					}
+					else if (ingrediant[i] + energy >= 100)
+					{
+						Console.WriteLine($"You gained {ingrediant[i] + energy - 100} energy.");
+
+						energy = 100;
+					}
+					else
+					{
+						energy += ingrediant[i];
+
+						Console.WriteLine($"You gained {ingrediant[i]} energy.");
+					}
+					Console.WriteLine($"Current energy: {energy}.");
+				}
+				else if (eventType[i].Equals("order"))
+				{
+					if (energy - 30 >= 0)
+					{
+						energy -= 30;
+						coins += ingrediant[i];
+						Console.WriteLine($"You earned {ingrediant[i]} coins.");
+					}
+					else
+					{
+						energy += 50;
+						Console.WriteLine("You had to rest!");
+					}
+				}
+				else
+				{
+					if (coins - ingrediant[i] > 0)
+					{
+						Console.WriteLine($"You bought {eventType[i]}.");
+						coins -= ingrediant[i];
+					}
+					else
+					{
+						Console.WriteLine($"Closed! Cannot afford {eventType[i]}.");
+						return;
+					}
+				}
+			}
+			Console.WriteLine("Day completed!");
+			Console.WriteLine($"Coins: {coins}");
+			Console.WriteLine($"Energy: { energy}");
+		}
+	}
+}
