@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Cooking_Factory
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+
+			List<int> bestBread = new List<int>();
+
+			while (true)
+			{
+				string imput = Console.ReadLine();
+
+				if (imput.Equals("Bake It!"))
+				{
+					break;
+				}
+
+				List<int> numbers = imput.Split("#").Select(int.Parse).ToList();
+
+				double sumNumbers = numbers.Sum();
+				double sumBestBread = bestBread.Sum();
+				double numbersCount = numbers.Count;
+				double bestBreadCount = bestBread.Count;
+
+				if (bestBreadCount.Equals(0))
+				{
+					bestBread = numbers;
+				}
+				else if (sumNumbers > sumBestBread)
+					{
+						bestBread = numbers;
+					}
+					else if (numbers.Sum().Equals(bestBread.Sum()))
+					{
+						if ((sumNumbers / numbersCount) > sumBestBread / bestBreadCount)
+						{
+							bestBread = numbers;
+						}
+						else if ((numbers.Sum() / numbers.Count).Equals(bestBread.Sum() / bestBread.Count))
+						{
+							if (numbers.Count < bestBread.Count)
+							{
+								bestBread = numbers;
+							}
+						}
+					}
+			}
+
+			Console.WriteLine($"Best Batch quality: {bestBread.Sum()}");
+			Console.WriteLine(string.Join(" ", bestBread));
+		}
+	}
+}
