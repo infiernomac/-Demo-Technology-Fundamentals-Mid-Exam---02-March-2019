@@ -1,0 +1,31 @@
+using System;
+
+namespace Cooking_Masterclass
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			double budget = double.Parse(Console.ReadLine());
+			int students = int.Parse(Console.ReadLine());
+			double priceForFlour = double.Parse(Console.ReadLine());
+			double priceForEgg = double.Parse(Console.ReadLine()) * 10;
+			double priceForApron = double.Parse(Console.ReadLine());
+
+			int freeFlour = students / 5;
+
+			priceForApron *= Math.Ceiling(students * 1.2);
+
+			double sum = priceForApron + (priceForEgg * students) + ((priceForFlour * students) - (freeFlour * priceForFlour));
+
+			if (sum > budget)
+			{
+				Console.WriteLine($"{sum - budget:f2}$ more needed.");
+			}
+			else
+			{
+				Console.WriteLine($"Items purchased for {sum:f2}$.");
+			}
+		}
+	}
+}
